@@ -320,13 +320,73 @@
   // Smooth scroll for # links
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener('click', function (e) {
-      var target = document.querySelector(this.getAttribute('href'));
+      var href = this.getAttribute('href');
+      if (href === '#') return;
+      var target = document.querySelector(href);
       if (target) {
         e.preventDefault();
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Закрыть мобильное меню после перехода
+        var navMenu = document.getElementById('nav-menu');
+        var hamburger = document.getElementById('nav-hamburger');
+        var backdrop = document.getElementById('nav-backdrop');
+        if (navMenu && navMenu.classList.contains('is-open')) {
+          navMenu.classList.remove('is-open');
+          if (hamburger) {
+            hamburger.classList.remove('is-open');
+            hamburger.setAttribute('aria-expanded', 'false');
+          }
+          if (backdrop) backdrop.classList.remove('is-visible');
+          document.body.style.overflow = '';
+        }
       }
     });
   });
+
+  // Гамбургер-меню: открыть/закрыть
+  var navHamburger = document.getElementById('nav-hamburger');
+  var navMenu = document.getElementById('nav-menu');
+  var navBackdrop = document.getElementById('nav-backdrop');
+  if (navHamburger && navMenu && navBackdrop) {
+    function openNav() {
+      navMenu.classList.add('is-open');
+      navHamburger.classList.add('is-open');
+      navHamburger.setAttribute('aria-expanded', 'true');
+      navBackdrop.classList.add('is-visible');
+      navBackdrop.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeNav() {
+      navMenu.classList.remove('is-open');
+      navHamburger.classList.remove('is-open');
+      navHamburger.setAttribute('aria-expanded', 'false');
+      navBackdrop.classList.remove('is-visible');
+      navBackdrop.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    navHamburger.addEventListener('click', function () {
+      if (navMenu.classList.contains('is-open')) {
+        closeNav();
+      } else {
+        openNav();
+      }
+    });
+    navBackdrop.addEventListener('click', closeNav);
+  }
+
+  // Подсветка шапки при прокрутке
+  var siteHeader = document.getElementById('site-header');
+  if (siteHeader) {
+    var scrollHandler = function () {
+      if (window.pageYOffset > 80) {
+        siteHeader.classList.add('header-scrolled');
+      } else {
+        siteHeader.classList.remove('header-scrolled');
+      }
+    };
+    window.addEventListener('scroll', scrollHandler, { passive: true });
+    scrollHandler();
+  }
 
   // Точка таймлайна движется вдоль линии вслед за прокруткой
   var timingSection = document.getElementById('timing');

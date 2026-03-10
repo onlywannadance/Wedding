@@ -40,6 +40,241 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ===== Шапка и навигация ===== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 0.75rem 1.5rem;
+  transition: background var(--transition), box-shadow var(--transition), padding var(--transition);
+}
+
+.site-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(13, 13, 13, 0.92) 0%,
+    rgba(13, 13, 13, 0.85) 70%,
+    rgba(13, 13, 13, 0.75) 100%
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+.site-header.header-scrolled::before {
+  background: rgba(13, 13, 13, 0.96);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+}
+
+.header-inner {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.header-logo {
+  font-family: var(--font-script);
+  font-size: clamp(1.35rem, 4vw, 1.75rem);
+  font-weight: normal;
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: color var(--transition), opacity var(--transition);
+  white-space: nowrap;
+}
+
+.header-logo:hover {
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 0.95;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem 1.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.nav-menu a {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  padding: 0.5rem 0.4rem;
+  border-radius: 6px;
+  transition: color var(--transition), background var(--transition);
+}
+
+.nav-menu a:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Гамбургер — скрыт на десктопе */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  cursor: pointer;
+  gap: 5px;
+  transition: border-color var(--transition), background var(--transition), transform var(--transition);
+  z-index: 1002;
+  position: relative;
+}
+
+.nav-hamburger:hover {
+  border-color: var(--white);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-hamburger:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--red);
+}
+
+.hamburger-line {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 1px;
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+.nav-hamburger.is-open .hamburger-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-hamburger.is-open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-hamburger.is-open .hamburger-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Задний фон для мобильного меню */
+.nav-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition);
+  z-index: 998;
+}
+
+/* Мобильная версия: гамбургер + выезжающее меню */
+@media (max-width: 768px) {
+  .nav-hamburger {
+    display: flex;
+  }
+
+  .nav-backdrop.is-visible {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(320px, 88vw);
+    height: 100vh;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 0;
+    padding: 5rem 1.5rem 2.5rem;
+    background: linear-gradient(
+      165deg,
+      rgba(92, 14, 38, 0.99) 0%,
+      rgba(70, 12, 32, 0.98) 50%,
+      rgba(13, 13, 13, 0.98) 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: -12px 0 48px rgba(0, 0, 0, 0.35);
+    transform: translateX(100%);
+    transition: transform var(--transition);
+    z-index: 1001;
+    list-style: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav-menu.is-open {
+    transform: translateX(0);
+  }
+
+  .nav-menu li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .nav-menu li:last-child {
+    border-bottom: none;
+  }
+
+  .nav-menu a {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    padding: 1.15rem 1.25rem;
+    width: 100%;
+    text-align: left;
+    border-radius: 0;
+    color: rgba(255, 255, 255, 0.95);
+    transition: background var(--transition), color var(--transition), padding-left var(--transition);
+    min-height: 3.25rem;
+    box-sizing: border-box;
+  }
+
+  .nav-menu a:hover,
+  .nav-menu a:active {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    padding-left: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    padding: 0.6rem 1rem;
+  }
+
+  .header-logo {
+    font-size: 1.25rem;
+  }
+}
+
 body {
   font-family: var(--font-sans);
   color: var(--white);

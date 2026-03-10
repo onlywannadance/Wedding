@@ -8,7 +8,7 @@
    или с fonts.cdnfonts.com
 
 2. Положите файл в эту папку с именем:
-   Atziluth-Script.woff2
+                        .woff2
    или
    Atziluth-Script.woff
 

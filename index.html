@@ -11,6 +11,31 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <!-- Навигация -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a href="#hero" class="header-logo" aria-label="На главную">АК</a>
+      <nav class="nav" aria-label="Основное меню">
+        <button type="button" class="nav-hamburger" id="nav-hamburger" aria-label="Открыть меню" aria-expanded="false" aria-controls="nav-menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="#hero">Приглашение</a></li>
+          <li><a href="#words">О нас</a></li>
+          <li><a href="#countdown">Таймер</a></li>
+          <li><a href="#timing">Тайминг</a></li>
+          <li><a href="#dresscode">Дресс-код</a></li>
+          <li><a href="#venue">Место</a></li>
+          <li><a href="#form">Анкета</a></li>
+          <li><a href="#contacts">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
+  </header>
+
   <!-- 1. Hero / Приглашение -->
   <section class="hero" id="hero">
     <div class="hero-video-wrap">
@@ -164,7 +189,7 @@
         <div class="dresscode-block dresscode-block--girls" data-aos="fade-up">
           <div class="dresscode-intro">
             <h3 class="dresscode-subtitle">Для девушек</h3>
-            <p class="dresscode-text">Просьба избегать белого — этот день за невестой.</p>
+            <p class="dresscode-text">Просьба избегать белого — этот цвет за невестой.</p>
           </div>
           <div class="dresscode-colors" aria-hidden="true">
             <div class="dresscode-swatch dresscode-swatch--1"></div>

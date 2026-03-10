@@ -1,0 +1,1379 @@
+/* ===== Atziluth Script — подключаем шрифт ===== */
+/* Файлы шрифта лежат в /fonts, а этот CSS лежит в /css — поэтому пути через ../fonts */
+@font-face {
+  font-family: 'Atziluth';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Atziluth Script'),
+       local('Atziluth'),
+       url('../fonts/Atziluth-Script.ttf') format('truetype'),
+       url('../fonts/Atziluth-Script.woff2') format('woff2'),
+       url('../fonts/Atziluth-Script.woff') format('woff'),
+       url('https://fonts.cdnfonts.com/s/31510/Atziluth%20Script.woff') format('woff');
+}
+
+/* ===== Variables ===== */
+:root {
+  --red: #8B1538;
+  --red-dark: #5C0E26;
+  --red-light: #A91D47;
+  --white: #FFFFFF;
+  --black: #0D0D0D;
+  --gray: #1A1A1A;
+  --gray-light: #2D2D2D;
+  --font-sans: 'Montserrat', sans-serif;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-script: 'Atziluth', cursive;
+  --font-display: 'Playfair Display', serif;
+  --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Reset & Base ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--white);
+  background: var(--black);
+  overflow-x: hidden;
+}
+
+/* ===== Hero / Приглашение ===== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem 4rem;
+  overflow: hidden;
+}
+
+.hero-video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(13, 13, 13, 0.5) 0%,
+    rgba(139, 21, 56, 0.35) 50%,
+    rgba(13, 13, 13, 0.6) 100%
+  );
+  pointer-events: none;
+}
+
+.sound-toggle {
+  position: absolute;
+  top: 2rem;
+  right: 1.5rem;
+  z-index: 10;
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--white);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  opacity: 0.9;
+}
+
+.sound-toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
+}
+
+.sound-toggle svg {
+  width: 22px;
+  height: 22px;
+}
+
+.sound-plus {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 600;
+  bottom: 8px;
+  right: 10px;
+}
+
+.sound-toggle.muted svg path:last-of-type {
+  opacity: 0.5;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  animation: heroFadeIn 1.2s ease-out;
+}
+
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-label {
+  font-size: clamp(0.7rem, 2vw, 0.85rem);
+  font-weight: 300;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  opacity: 0.95;
+}
+
+.hero-names {
+  font-family: var(--font-script);
+  font-size: clamp(2.8rem, 10vw, 5rem);
+  font-weight: normal;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1em;
+}
+
+.hero-names .name {
+  display: block;
+  font-weight: normal;
+}
+
+.hero-names .amp {
+  font-size: 0.6em;
+  opacity: 0.9;
+}
+
+.hero-date {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.35em 0.5em;
+  font-weight: 300;
+}
+
+.date-month,
+.date-year {
+  font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+  letter-spacing: 0.1em;
+}
+
+.date-day {
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-weight: 500;
+  margin: 0 0.15em;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  opacity: 0.85;
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+.scroll-arrow {
+  width: 20px;
+  height: 20px;
+  border-right: 2px solid var(--white);
+  border-bottom: 2px solid var(--white);
+  transform: rotate(45deg);
+  margin-top: -4px;
+}
+
+/* ===== Sections common ===== */
+.section {
+  padding: 4rem 1.5rem;
+  position: relative;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.05em;
+}
+
+.section-title-light {
+  color: var(--white);
+}
+
+.section-light {
+  background: var(--white);
+  color: var(--black);
+}
+
+.section-light .section-title {
+  color: var(--red-dark);
+}
+
+.section-dark {
+  background: var(--black);
+  color: var(--white);
+}
+
+/* ===== 2. Блок со словами ===== */
+.section-words {
+  padding: 4rem 1.5rem;
+}
+
+.words-card {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+  border: 2px solid var(--black);
+  background: var(--white);
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.words-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 64px rgba(139, 21, 56, 0.12);
+}
+
+.words-line {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  font-weight: 500;
+  color: var(--black);
+  margin-bottom: 1.25rem;
+}
+
+.words-text {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  line-height: 1.85;
+  color: var(--black);
+  margin-bottom: 1rem;
+}
+
+.words-text:last-of-type {
+  margin-bottom: 0;
+}
+
+/* 3D-куб с фотографиями */
+.words-gallery-wrap {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 320px;
+  perspective-origin: center center;
+}
+
+.gallery {
+  --s: 290px;
+  display: grid;
+  transform-style: preserve-3d;
+  --_p: perspective(calc(2.5 * var(--s)));
+  animation: gallery-cube-rotate 14s infinite cubic-bezier(0.5, -0.5, 0.5, 1.5);
+}
+
+.gallery img {
+  grid-area: 1/1;
+  width: var(--s);
+  aspect-ratio: 1;
+  object-fit: cover;
+  transform: var(--_t, ) translateZ(calc(var(--s) / 2));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.gallery img:nth-child(2) { --_t: rotateX(-90deg); }
+.gallery img:nth-child(3) { --_t: rotateY(90deg); }
+.gallery img:nth-child(4) { --_t: rotateX(180deg) rotate(90deg); }
+.gallery img:nth-child(5) { --_t: rotateX(90deg); }
+.gallery img:nth-child(6) { --_t: rotateY(-90deg); }
+
+/* Фокус выше для фото, где обрезается голова */
+.gallery img.cube-face-focus-up {
+  object-position: center 32%;
+}
+
+@keyframes gallery-cube-rotate {
+  0%, 3%   { transform: var(--_p) rotate3d(0, 0, 0, 0deg); }
+  14%, 19% { transform: var(--_p) rotate3d(-1, 1, 0, 180deg); }
+  31%, 36% { transform: var(--_p) rotate3d(0, -1, 0, 90deg); }
+  47%, 52% { transform: var(--_p) rotate3d(1, 0, 0, 90deg); }
+  64%, 69% { transform: var(--_p) rotate3d(1, 0, 0, -90deg); }
+  81%, 86% { transform: var(--_p) rotate3d(0, 1, 0, 90deg); }
+  97%, 100% { transform: var(--_p) rotate3d(0, 0, 0, 0deg); }
+}
+
+/* ===== 3. Таймер + календарь ===== */
+.section-timer .section-title {
+  margin-bottom: 2rem;
+}
+
+.countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  max-width: 520px;
+  margin: 0 auto 3rem;
+}
+
+.countdown-item {
+  text-align: center;
+  padding: 1.25rem 0.5rem;
+  background: var(--gray);
+  border-radius: 12px;
+  border: 1px solid var(--gray-light);
+  transition: var(--transition);
+}
+
+.countdown-item:hover {
+  transform: scale(1.03);
+  border-color: var(--red);
+}
+
+.countdown-value {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.25rem;
+  min-height: 1.2em;
+}
+
+.countdown-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+@media (max-width: 480px) {
+  .countdown-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.calendar-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.calendar-card {
+  width: 140px;
+  padding: 1.5rem;
+  background: linear-gradient(145deg, #a90000, #450101);
+  border-radius: 16px;
+  text-align: center;
+  color: var(--white);
+  box-shadow: 0 12px 40px rgba(139, 21, 56, 0.45);
+  animation: calendarPulse 3s ease-in-out infinite;
+}
+
+@keyframes calendarPulse {
+  0%, 100% { box-shadow: 0 12px 40px rgba(139, 21, 56, 0.4); }
+  50% { box-shadow: 0 16px 48px rgba(139, 21, 56, 0.5); }
+}
+
+.calendar-month {
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+  opacity: 0.95;
+}
+
+.calendar-year {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.9;
+}
+
+.calendar-day {
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.calendar-weekday {
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  opacity: 0.9;
+}
+
+/* ===== 4. Тайминг (красный шёлк) ===== */
+.section-silk {
+  position: relative;
+  padding: 4rem 1.5rem;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.silk-video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.silk-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.silk-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(13, 13, 13, 0.55) 0%,
+    rgba(139, 21, 56, 0.4) 50%,
+    rgba(13, 13, 13, 0.6) 100%
+  );
+  pointer-events: none;
+}
+
+.section-silk .section-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.timing-timeline {
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative;
+  padding-top: 1rem;
+  min-height: 1px;
+}
+
+/* Вертикальная линия через центры кружков (слева) */
+.timing-timeline::before {
+  content: '';
+  position: absolute;
+  left: 55px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0.25) 100%);
+  border-radius: 1px;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+  animation: timingLineGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes timingLineGlow {
+  0%, 100% { opacity: 1; box-shadow: 0 0 12px rgba(255, 255, 255, 0.3); }
+  50% { opacity: 0.95; box-shadow: 0 0 20px rgba(255, 255, 255, 0.45); }
+}
+
+/* Стартовая точка: движется вдоль линии при прокрутке (позиция задаётся в JS) */
+.timing-start-dot {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--white);
+  position: absolute;
+  left: 50px;
+  top: 0;
+  z-index: 2;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+  transform: translateY(-5px);
+  pointer-events: none;
+}
+
+.timing-item {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 0 1.5rem;
+  margin-bottom: 4.5rem;
+  align-items: start;
+  position: relative;
+  z-index: 5;
+  transition: transform var(--transition);
+}
+
+.timing-item:last-child {
+  margin-bottom: 0;
+}
+
+.timing-item:hover {
+  transform: translateX(4px);
+}
+
+/* Круглый маркер слева — поверх движущейся точки */
+.timing-marker {
+  grid-column: 1;
+  flex-shrink: 0;
+  width: 110px;
+  height: 110px;
+  margin-top: -0.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.timing-content {
+  grid-column: 2;
+  width: 100%;
+  min-width: 0;
+  text-align: left;
+  padding-top: 0;
+}
+
+.timing-thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #3d3d3d 0%, #2a2a2a 100%);
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  filter: grayscale(1) contrast(1.08);
+  transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
+  object-fit: cover;
+  overflow: hidden;
+  display: block;
+}
+
+.timing-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(1) contrast(1.08);
+}
+
+.timing-item:hover .timing-thumb img {
+  filter: grayscale(1) contrast(1.08);
+}
+
+.timing-item:hover .timing-thumb {
+  transform: scale(1.05);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+}
+
+.timing-time {
+  display: block;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.timing-title {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.01em;
+}
+
+.timing-desc {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+@media (max-width: 640px) {
+  .timing-timeline {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: 100%;
+  }
+  .timing-timeline::before {
+    left: 45px;
+  }
+  .timing-start-dot {
+    left: 40px;
+  }
+  .timing-item {
+    grid-template-columns: 90px 1fr;
+    gap: 0 1.25rem;
+    margin-bottom: 3.5rem;
+  }
+  .timing-marker {
+    grid-column: 1;
+    width: 90px;
+    height: 90px;
+  }
+  .timing-content {
+    grid-column: 2;
+    text-align: left;
+    min-width: 0;
+  }
+}
+
+/* Заголовок блока — крупнее, с лёгким свечением */
+.timing-heading {
+  font-family: var(--font-sans);
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.25);
+  margin-bottom: 5em;
+}
+
+/* ===== 5. Дресс-код ===== */
+.dresscode-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .dresscode-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dresscode-block {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.dresscode-intro {
+  min-height: 120px;
+  margin-bottom: 1.5rem;
+}
+
+.dresscode-subtitle {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--red-dark);
+  margin-bottom: 0.75rem;
+}
+
+.dresscode-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--black);
+  margin-bottom: 0;
+  opacity: 0.9;
+}
+
+/* Цветовая палитра дресс-кода */
+.dresscode-colors {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.dresscode-swatch {
+  aspect-ratio: 1;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Девушки: бежевый, красный, бордовый, чёрный */
+.dresscode-block--girls .dresscode-swatch--1 {
+  background: linear-gradient(145deg, #F5F0E8 0%, #E8DDD0 50%, #D4C4B0 100%);
+  border-color: rgba(212, 196, 176, 0.6);
+  animation: dresscodeGirls1 4s ease-in-out infinite;
+}
+.dresscode-block--girls .dresscode-swatch--2 {
+  background: linear-gradient(145deg, #610000 0%, #bd0000 50%, #A01830 100%);
+  border-color: rgba(139, 21, 56, 0.5);
+  animation: dresscodeGirls2 4s ease-in-out infinite 0.5s;
+}
+.dresscode-block--girls .dresscode-swatch--3 {
+  background: linear-gradient(145deg, #c90000 0%, #6f0000 50%, #2f0000 100%);
+  border-color: rgba(92, 14, 38, 0.6);
+  animation: dresscodeGirls3 4s ease-in-out infinite 1s;
+}
+.dresscode-block--girls .dresscode-swatch--4 {
+  background: linear-gradient(145deg, #2D2D2D 0%, var(--black) 50%, #1A1A1A 100%);
+  border-color: rgba(0, 0, 0, 0.4);
+  animation: dresscodeGirls4 4s ease-in-out infinite 1.5s;
+}
+
+@keyframes dresscodeGirls1 {
+  0%, 100% { box-shadow: 0 8px 24px rgba(245, 240, 232, 0.4); transform: translateY(0); }
+  50% { box-shadow: 0 12px 32px rgba(212, 196, 176, 0.5); transform: translateY(-4px); }
+}
+@keyframes dresscodeGirls2 {
+  0%, 100% { box-shadow: 0 8px 24px rgba(139, 21, 56, 0.35); transform: translateY(0); }
+  50% { box-shadow: 0 12px 32px rgba(196, 30, 58, 0.5); transform: translateY(-4px); }
+}
+@keyframes dresscodeGirls3 {
+  0%, 100% { box-shadow: 0 8px 24px rgba(92, 14, 38, 0.4); transform: translateY(0); }
+  50% { box-shadow: 0 12px 32px rgba(74, 10, 26, 0.5); transform: translateY(-4px); }
+}
+@keyframes dresscodeGirls4 {
+  0%, 100% { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); transform: translateY(0); }
+  50% { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35); transform: translateY(-4px); }
+}
+
+/* Мужчины: белый, бежевый, серый, чёрный */
+.dresscode-block--men .dresscode-swatch--1 {
+  background: linear-gradient(145deg, #FFFFFF 0%, #F8F8F8 50%, #F0F0F0 100%);
+  border-color: rgba(0, 0, 0, 0.08);
+  animation: dresscodeMen1 4s ease-in-out infinite;
+}
+.dresscode-block--men .dresscode-swatch--2 {
+  background: linear-gradient(145deg, #F5F0E8 0%, #E8E0D5 50%, #DDD0C0 100%);
+  border-color: rgba(200, 190, 175, 0.5);
+  animation: dresscodeMen2 4s ease-in-out infinite 0.5s;
+}
+.dresscode-block--men .dresscode-swatch--3 {
+  background: linear-gradient(145deg, #9E9E9E 0%, #757575 50%, #616161 100%);
+  border-color: rgba(97, 97, 97, 0.4);
+  animation: dresscodeMen3 4s ease-in-out infinite 1s;
+}
+.dresscode-block--men .dresscode-swatch--4 {
+  background: linear-gradient(145deg, #424242 0%, var(--black) 50%, #1A1A1A 100%);
+  border-color: rgba(0, 0, 0, 0.4);
+  animation: dresscodeMen4 4s ease-in-out infinite 1.5s;
+}
+
+@keyframes dresscodeMen1 {
+  0%, 100% { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06); transform: translateY(0); }
+  50% { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1); transform: translateY(-4px); }
+}
+@keyframes dresscodeMen2 {
+  0%, 100% { box-shadow: 0 8px 24px rgba(221, 208, 192, 0.35); transform: translateY(0); }
+  50% { box-shadow: 0 12px 32px rgba(200, 190, 175, 0.45); transform: translateY(-4px); }
+}
+@keyframes dresscodeMen3 {
+  0%, 100% { box-shadow: 0 8px 24px rgba(97, 97, 97, 0.3); transform: translateY(0); }
+  50% { box-shadow: 0 12px 32px rgba(97, 97, 97, 0.45); transform: translateY(-4px); }
+}
+@keyframes dresscodeMen4 {
+  0%, 100% { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); transform: translateY(0); }
+  50% { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35); transform: translateY(-4px); }
+}
+
+.dresscode-swatch:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+}
+.dresscode-block--girls .dresscode-swatch:hover {
+  box-shadow: 0 16px 40px rgba(139, 21, 56, 0.25);
+}
+.dresscode-block--men .dresscode-swatch:hover {
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Заголовок и сетка примеров образов (2×2) */
+.dresscode-examples-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--red-dark);
+  margin-bottom: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.dresscode-examples {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.dresscode-example-photo {
+  aspect-ratio: 3/4;
+  border-radius: 12px;
+  border: 2px dashed rgba(0, 0, 0, 0.18);
+  background: linear-gradient(135deg, #f8f8f8 0%, #eee 50%, #e5e5e5 100%);
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+  animation: dresscodeExamplePulse 3s ease-in-out infinite;
+}
+
+.dresscode-example-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 60%,
+    transparent 100%
+  );
+  animation: dresscodeExampleShine 2.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.dresscode-block--girls .dresscode-example-photo {
+  border-color: rgba(139, 21, 56, 0.2);
+  background: linear-gradient(135deg, #faf8f6 0%, #f0ebe5 50%, #e8e0d8 100%);
+}
+.dresscode-block--girls .dresscode-example-photo:nth-child(2) { animation-delay: 0.15s; }
+.dresscode-block--girls .dresscode-example-photo:nth-child(3) { animation-delay: 0.3s; }
+.dresscode-block--girls .dresscode-example-photo:nth-child(4) { animation-delay: 0.45s; }
+
+.dresscode-block--men .dresscode-example-photo {
+  border-color: rgba(0, 0, 0, 0.12);
+  background: linear-gradient(135deg, #f5f5f5 0%, #ebebeb 50%, #e0e0e0 100%);
+}
+.dresscode-block--men .dresscode-example-photo:nth-child(2) { animation-delay: 0.1s; }
+.dresscode-block--men .dresscode-example-photo:nth-child(3) { animation-delay: 0.2s; }
+.dresscode-block--men .dresscode-example-photo:nth-child(4) { animation-delay: 0.3s; }
+
+@keyframes dresscodeExamplePulse {
+  0%, 100% { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06); transform: scale(1); }
+  50% { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); transform: scale(1.01); }
+}
+
+@keyframes dresscodeExampleShine {
+  0% { transform: translateX(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+.dresscode-example-photo:hover {
+  transform: scale(1.03);
+  border-color: var(--red);
+  box-shadow: 0 12px 32px rgba(139, 21, 56, 0.15);
+}
+.dresscode-block--men .dresscode-example-photo:hover {
+  border-color: var(--gray-light);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== 6. Место проведения ===== */
+.venue-info {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.venue-name {
+  font-family: var(--font-script);
+  font-size: 4rem;
+  font-weight: normal;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+
+.venue-address {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 0.25rem;
+}
+
+.venue-note {
+  font-size: 0.9rem;
+  opacity: 0.75;
+  margin-bottom: 1rem;
+}
+
+.venue-link {
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  margin-top: 1rem;
+  background: transparent;
+  color: var(--white);
+  border: 2px solid #8f0707;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.venue-link:hover {
+  background: #8f0707;
+  border-color: #8f0707;
+  color: var(--white);
+}
+
+#venue .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#venue .section-title,
+#venue .venue-info {
+  width: 100%;
+}
+
+.venue-map-wrap {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+  aspect-ratio: 16/10;
+  max-height: 400px;
+}
+
+.venue-map {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* ===== 7. Анкета гостя (красный шёлк) ===== */
+.section-silk#form {
+  min-height: auto;
+  display: block;
+  padding: 4rem 1.5rem;
+  overflow: visible;
+}
+
+.section-silk#form .section-inner {
+  overflow: visible;
+}
+
+.form-event-info {
+  text-align: center;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 2rem;
+}
+
+.guest-form {
+  max-width: 480px;
+  margin: 0 auto 2rem;
+  overflow: visible;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 1.25rem;
+  color: var(--white);
+  font-size: 0.9rem;
+}
+
+.form-label-text {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.form-input {
+  width: 100%;
+  margin-top: 0.35rem;
+  padding: 0.85rem 1rem;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  transition: border-color var(--transition);
+}
+
+.form-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--white);
+}
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+/* Чтобы выпадающий список «Планируете ли присутствовать» не обрезался */
+.form-label-select {
+  position: relative;
+  z-index: 10;
+}
+
+/* Кастомный выпадающий список (вместо нативного select) */
+.custom-select {
+  position: relative;
+  margin-top: 0.35rem;
+}
+
+.custom-select-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.85rem 1rem;
+  padding-right: 2.5rem;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--transition);
+  appearance: none;
+}
+
+.custom-select-trigger:hover,
+.custom-select-trigger:focus {
+  outline: none;
+  border-color: var(--white);
+}
+
+.custom-select-value {
+  flex: 1;
+}
+
+.custom-select-value.placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.custom-select-arrow {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform var(--transition);
+}
+
+.custom-select.is-open .custom-select-arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.custom-select-dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  margin-top: 4px;
+  background: var(--red-dark);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.custom-select-dropdown[hidden] {
+  display: none !important;
+}
+
+.custom-select-option {
+  padding: 0.85rem 1rem;
+  color: var(--white);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.custom-select-option:last-child {
+  border-bottom: none;
+}
+
+.custom-select-option:hover,
+.custom-select-option:focus {
+  background: rgba(255, 255, 255, 0.15);
+  outline: none;
+}
+
+.form-add-guest {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  margin: 1.25rem auto 1.5rem;
+  padding: 0.65rem 1.25rem;
+  background: transparent;
+  color: var(--white);
+  border: 2px dashed rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.form-add-guest:hover {
+  border-color: var(--white);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.form-label-block {
+  margin-bottom: 1.5rem;
+}
+
+.guest-block-added {
+  margin-top: 1.75rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Кнопка «Удалить» показывается только у добавленных блоков гостей */
+.guest-block:not(.guest-block-added) .form-remove-guest {
+  display: none;
+}
+
+.form-remove-guest {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.4rem 1rem;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.form-remove-guest:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.form-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.form-check input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--red);
+}
+
+.form-submit {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  margin: 5rem auto 0;
+  padding: 1rem 2rem;
+  background: linear-gradient(145deg, #a90000, #000000);
+  color: var(--white);
+  border: 2px solid var(--white);
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.form-submit:hover {
+  background: rgba(131, 8, 8, 0.877);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(112, 2, 2, 0.877);
+}
+
+.form-signature {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.form-signature-line {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.25rem;
+}
+
+.form-signature-names {
+  font-family: var(--font-script);
+  font-size: 2rem;
+  font-weight: normal;
+  color: var(--white);
+}
+
+/* ===== 8. Контакты (белый фон) ===== */
+#contacts .contacts-inner {
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contacts-intro {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--black);
+  margin-bottom: 2rem;
+}
+
+.contacts-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.contacts-card {
+  padding: 1.5rem 1.25rem;
+  border: 2px solid rgba(143, 7, 7, 0.25);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.contacts-card:hover {
+  border-color: rgba(143, 7, 7, 0.5);
+  box-shadow: 0 8px 24px rgba(143, 7, 7, 0.08);
+}
+
+.contacts-name {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 0.35rem;
+}
+
+.contacts-phone {
+  font-size: 1.05rem;
+  color: var(--black);
+  margin-bottom: 1.25rem;
+  word-break: keep-all;
+}
+
+.contacts-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.contacts-btn {
+  display: inline-block;
+  width: 100%;
+  max-width: 220px;
+  padding: 0.65rem 1.25rem;
+  background: transparent;
+  color: var(--black);
+  border: 2px solid #8f0707;
+  border-radius: 10px;
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: var(--transition);
+}
+
+.contacts-btn:hover {
+  background: #8f0707;
+  border-color: #8f0707;
+  color: var(--white);
+}
+
+@media (max-width: 560px) {
+  .contacts-cards {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* ===== 9. Футер ===== */
+.footer {
+  padding: 2.5rem;
+  text-align: center;
+  background: var(--black);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.footer-text {
+  font-family: var(--font-script);
+  font-size: 1.75rem;
+  font-weight: normal;
+  letter-spacing: 0.02em;
+}
+
+/* ===== AOS ===== */
+[data-aos] {
+  pointer-events: auto;
+}
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .hero-scroll,
+  .calendar-card {
+    animation: none;
+  }
+}

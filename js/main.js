@@ -226,8 +226,6 @@
           guestForm.reset();
           var blocks = guestForm.querySelectorAll('.guest-block');
           for (var b = 1; b < blocks.length; b++) blocks[b].remove();
-          var removeBtnAfterSubmit = document.getElementById('removeGuestBtn');
-          if (removeBtnAfterSubmit) removeBtnAfterSubmit.setAttribute('hidden', '');
         }).catch(function (err) {
           if (submitBtn) submitBtn.disabled = false;
           console.error('Guest form:', err);
@@ -239,23 +237,20 @@
         guestForm.reset();
         var blocks = guestForm.querySelectorAll('.guest-block');
         for (var b = 1; b < blocks.length; b++) blocks[b].remove();
-        var removeBtnNoSheets = document.getElementById('removeGuestBtn');
-        if (removeBtnNoSheets) removeBtnNoSheets.setAttribute('hidden', '');
       }
     });
 
-    // Добавить гостя
+    // Добавить / удалить гостя (глобальные кнопки под формой)
     var addGuestBtn = document.getElementById('addGuestBtn');
     var removeGuestBtn = document.getElementById('removeGuestBtn');
     var guestBlocks = document.getElementById('guestBlocks');
-    if (addGuestBtn && guestBlocks) {
+    if (addGuestBtn && guestBlocks && removeGuestBtn) {
       function syncRemoveGuestBtn() {
-        if (!removeGuestBtn) return;
         var blocks = guestBlocks.querySelectorAll('.guest-block');
         if (blocks.length > 1) {
-          removeGuestBtn.removeAttribute('hidden');
+          removeGuestBtn.classList.add('is-visible');
         } else {
-          removeGuestBtn.setAttribute('hidden', '');
+          removeGuestBtn.classList.remove('is-visible');
         }
       }
 
@@ -284,32 +279,15 @@
         syncRemoveGuestBtn();
       });
 
-      // Удалить гостя (удаляем последний добавленный блок)
-      if (removeGuestBtn) {
-        removeGuestBtn.addEventListener('click', function () {
-          var blocks = guestBlocks.querySelectorAll('.guest-block');
-          if (blocks.length <= 1) return;
-          var last = blocks[blocks.length - 1];
-          if (last) last.remove();
-          syncRemoveGuestBtn();
-          var remaining = guestBlocks.querySelectorAll('.guest-block');
-          var lastBlock = remaining[remaining.length - 1];
-          if (lastBlock) lastBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        });
-      }
-
-      // Поддержка старой кнопки (если где-то осталась в разметке) — удалить конкретный блок
-      guestBlocks.addEventListener('click', function (e) {
-        if (!e.target.closest('.form-remove-guest')) return;
-        var block = e.target.closest('.guest-block');
+      removeGuestBtn.addEventListener('click', function () {
         var blocks = guestBlocks.querySelectorAll('.guest-block');
-        if (block && blocks.length > 1) {
-          block.remove();
-          syncRemoveGuestBtn();
-          var remaining = guestBlocks.querySelectorAll('.guest-block');
-          var lastBlock = remaining[remaining.length - 1];
-          if (lastBlock) lastBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
+        if (blocks.length <= 1) return;
+        var last = blocks[blocks.length - 1];
+        if (last) last.remove();
+        syncRemoveGuestBtn();
+        var remaining = guestBlocks.querySelectorAll('.guest-block');
+        var lastBlock = remaining[remaining.length - 1];
+        if (lastBlock) lastBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       });
     }
 

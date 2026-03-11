@@ -226,6 +226,8 @@
           guestForm.reset();
           var blocks = guestForm.querySelectorAll('.guest-block');
           for (var b = 1; b < blocks.length; b++) blocks[b].remove();
+          var removeBtnAfterSubmit = document.getElementById('removeGuestBtn');
+          if (removeBtnAfterSubmit) removeBtnAfterSubmit.setAttribute('hidden', '');
         }).catch(function (err) {
           if (submitBtn) submitBtn.disabled = false;
           console.error('Guest form:', err);
@@ -237,6 +239,8 @@
         guestForm.reset();
         var blocks = guestForm.querySelectorAll('.guest-block');
         for (var b = 1; b < blocks.length; b++) blocks[b].remove();
+        var removeBtnNoSheets = document.getElementById('removeGuestBtn');
+        if (removeBtnNoSheets) removeBtnNoSheets.setAttribute('hidden', '');
       }
     });
 

@@ -147,20 +147,49 @@
         if (!arr || !arr.length) return '';
         return arr.map(function (v) { return DRINK_LABELS[v] || v; }).join(', ');
       }
+      // Преобразуем данные так, чтобы в таблицу отправлялось «1 человек — 1 строка»
+      function buildFlatGuests(attendText) {
+        var flatGuests = [];
+        if (!Array.isArray(data.guests)) return flatGuests;
+        data.guests.forEach(function (g) {
+          var drinksText = formatDrinks(g.drink);
+          function pushPerson(nameStr) {
+            if (!nameStr) return;
+            var trimmed = String(nameStr).trim();
+            if (!trimmed) return;
+            flatGuests.push({
+              name: trimmed,
+              partner: '',
+              children: '',
+              attend: attendText,
+              drinks: drinksText
+            });
+          }
+          // Основной гость
+          if (g.name) {
+            pushPerson(g.name);
+          }
+          // Партнёр(ы) — если вписано несколько имён, разделённых запятыми/точками с запятой/переносами строк
+          if (g.partner) {
+            String(g.partner).split(/[,;\n]+/).forEach(function (p) {
+              pushPerson(p);
+            });
+          }
+          // Дети — каждое имя/описание ребёнка тоже отдельной строкой
+          if (g.children) {
+            String(g.children).split(/[,;\n]+/).forEach(function (c) {
+              pushPerson(c);
+            });
+          }
+        });
+        return flatGuests;
+      }
       if (SHEETS_WEB_APP_URL) {
         var submitBtn = guestForm.querySelector('.form-submit');
         if (submitBtn) submitBtn.disabled = true;
         var payload = {
           attend: attendText,
-          guests: data.guests.map(function (g) {
-            return {
-              name: g.name || '',
-              partner: g.partner || '',
-              children: g.children || '',
-              attend: attendText,
-              drinks: formatDrinks(g.drink)
-            };
-          })
+          guests: buildFlatGuests(attendText)
         };
         var headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
         if (SUBMIT_URL.indexOf('127.0.0.1') !== -1) headers['X-Forward-To'] = SHEETS_WEB_APP_URL;

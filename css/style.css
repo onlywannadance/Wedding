@@ -1396,6 +1396,28 @@ body {
   background: rgba(255, 255, 255, 0.08);
 }
 
+.form-remove-guest-global {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  margin: 0.25rem auto 1rem;
+  padding: 0.65rem 1.25rem;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.92);
+  border: 2px dashed rgba(255, 255, 255, 0.45);
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.form-remove-guest-global:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.06);
+}
+
 .form-label-block {
   margin-bottom: 1.5rem;
 }
@@ -1404,28 +1426,6 @@ body {
   margin-top: 1.75rem;
   padding-top: 1.75rem;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* Кнопка «Удалить» показывается только у добавленных блоков гостей */
-.guest-block:not(.guest-block-added) .form-remove-guest {
-  display: none;
-}
-
-.form-remove-guest {
-  display: inline-block;
-  margin-top: 0.75rem;
-  padding: 0.4rem 1rem;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 4px;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-
-.form-remove-guest:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.6);
 }
 
 .form-checkboxes {

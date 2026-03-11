@@ -220,8 +220,8 @@
         }).then(function (text) {
           var result;
           try { result = JSON.parse(text); } catch (_) { result = {}; }
-          var msg = 'Спасибо! Ваши данные сохранены. Мы ждём вас на празднике!';
-          if (result && typeof result.rows === 'number') msg += ' Записано гостей: ' + result.rows + '.';
+          var msg = 'Спасибо! Ваши данные сохранены!';
+          if (result && typeof result.rows === 'number') msg += ' Записано человек: ' + result.rows + '.';
           alert(msg);
           guestForm.reset();
           var blocks = guestForm.querySelectorAll('.guest-block');
@@ -233,7 +233,7 @@
         });
       } else {
         console.log('Guest form:', data);
-        alert('Спасибо! Ваши данные сохранены. Мы ждём вас на празднике!');
+        alert('Спасибо! Ваши данные сохранены!');
         guestForm.reset();
         var blocks = guestForm.querySelectorAll('.guest-block');
         for (var b = 1; b < blocks.length; b++) blocks[b].remove();
@@ -242,8 +242,21 @@
 
     // Добавить гостя
     var addGuestBtn = document.getElementById('addGuestBtn');
+    var removeGuestBtn = document.getElementById('removeGuestBtn');
     var guestBlocks = document.getElementById('guestBlocks');
     if (addGuestBtn && guestBlocks) {
+      function syncRemoveGuestBtn() {
+        if (!removeGuestBtn) return;
+        var blocks = guestBlocks.querySelectorAll('.guest-block');
+        if (blocks.length > 1) {
+          removeGuestBtn.removeAttribute('hidden');
+        } else {
+          removeGuestBtn.setAttribute('hidden', '');
+        }
+      }
+
+      syncRemoveGuestBtn();
+
       addGuestBtn.addEventListener('click', function () {
         var blocks = guestBlocks.querySelectorAll('.guest-block');
         var template = blocks[0];
@@ -264,15 +277,31 @@
           cb.setAttribute('name', 'drink_' + index);
         });
         guestBlocks.appendChild(clone);
+        syncRemoveGuestBtn();
       });
 
-      // Удалить гостя (только у добавленных блоков, если блоков больше одного)
+      // Удалить гостя (удаляем последний добавленный блок)
+      if (removeGuestBtn) {
+        removeGuestBtn.addEventListener('click', function () {
+          var blocks = guestBlocks.querySelectorAll('.guest-block');
+          if (blocks.length <= 1) return;
+          var last = blocks[blocks.length - 1];
+          if (last) last.remove();
+          syncRemoveGuestBtn();
+          var remaining = guestBlocks.querySelectorAll('.guest-block');
+          var lastBlock = remaining[remaining.length - 1];
+          if (lastBlock) lastBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+      }
+
+      // Поддержка старой кнопки (если где-то осталась в разметке) — удалить конкретный блок
       guestBlocks.addEventListener('click', function (e) {
         if (!e.target.closest('.form-remove-guest')) return;
         var block = e.target.closest('.guest-block');
         var blocks = guestBlocks.querySelectorAll('.guest-block');
         if (block && blocks.length > 1) {
           block.remove();
+          syncRemoveGuestBtn();
           var remaining = guestBlocks.querySelectorAll('.guest-block');
           var lastBlock = remaining[remaining.length - 1];
           if (lastBlock) lastBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' });

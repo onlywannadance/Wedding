@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var EVENT_DATE = new Date('2026-08-01T12:00:00');
+  var EVENT_DATE = new Date('2026-08-01T15:30:00');
 
   // URL веб-приложения Google Apps Script (оставьте пустым, если не используете таблицу)
   var SHEETS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxNSAyRzyjwwixCHwltgzwIKjizLW5ElDZ_ie-EyrgMNaM0YmFTBUBEpmSEh_L-5gSU/exec';
